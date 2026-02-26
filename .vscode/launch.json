@@ -1,0 +1,21 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "aws-sam",
+      "request": "direct-invoke",
+      "name": "sam-app:HelloWorldFunction",
+      "invokeTarget": {
+        "target": "template",
+        "templatePath": "${workspaceFolder}/sam-app/template.yaml",
+        "logicalId": "HelloWorldFunction"
+      },
+      "lambda": {
+        "payload": {
+          "path": "${workspaceFolder}/sam-app/events/event.json"
+        }
+      },
+      "preLaunchTask": "sam-build"
+    }
+  ]
+}

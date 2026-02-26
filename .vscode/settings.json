@@ -1,0 +1,4 @@
+{
+  "aws.samcli.enableCodeLenses": true,
+  "aws.samcli.lambdaTimeout": 90
+}
