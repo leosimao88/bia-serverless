@@ -8,4 +8,8 @@ phases:
     commands:
       - cd bia
       - sam build
-      - sam deploy --no-confirm-changeset --no-fail-on-empty-changeset
+      - sam package --output-template-file ../template-out-bia-serverless.yaml --s3-bucket bia-pipeline-us-east-1-lsa --s3-prefix bia-serverless
+
+artifacts:
+  files:
+    - template-out-bia-serverless.yaml
