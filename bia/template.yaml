@@ -11,16 +11,17 @@ Parameters:
   DBName:
     Type: String
     Description: Nome da base de dados
-  DBUser:
+  DBSecretArn:
     Type: String
-    Description: Nome do usuario da base de dados
-  DB_SECRET_ARN:
-    Type: String
-    Description: Senha do usuario da base de dados
+    Description: ARN do secret com credenciais do banco
     NoEcho: true
   DBHost:
     Type: String
     Description: Host da base de dados
+  DBPort:
+    Type: String
+    Description: Porta da base de dados
+    Default: "5432"
 
 Globals:
   Function:
@@ -34,7 +35,7 @@ Globals:
         - "subnet-0f4978239390808f8"
     Environment:
       Variables:
-        DB_SECRET_ARN: !Ref DB_SECRET_ARN
+        DB_SECRET_ARN: !Ref DBSecretArn
         DB_HOST: !Ref DBHost
         DB_PORT: !Ref DBPort
   Api:
