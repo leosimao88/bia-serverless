@@ -8,7 +8,7 @@ phases:
       - echo "Iniciando build do react..."
       - cd bia/client
       - npm install
-      - NODE_OPTIONS=--openssl-legacy-provider VITE_API_URL=https://www.leocloud.com.br SKIP_PREFLIGHT_CHECK=true npm run build
+      - NODE_OPTIONS=--openssl-legacy-provider VITE_API_URL=https://bia.leocloud.com.br SKIP_PREFLIGHT_CHECK=true npm run build
 artifacts:
   files:
     - '**/*'
