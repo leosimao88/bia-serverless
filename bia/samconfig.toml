@@ -1,0 +1,17 @@
+version = 0.1
+
+[default.build.parameters]
+cached = true
+parallel = true
+
+[default.deploy.parameters]
+stack_name = "bia-serverless"
+resolve_s3 = true
+s3_prefix = "bia-serverless"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+image_repositories = []
+disable_rollback = true
+
+[default.global.parameters]
+region = "us-east-1"

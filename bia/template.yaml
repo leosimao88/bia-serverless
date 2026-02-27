@@ -1,0 +1,91 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  sam-bia
+
+  Sample SAM Template for sam-bia
+  
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 60
+  Api:
+    Cors:
+      AllowMethods: "'GET, PUT, POST, DELETE, OPTIONS'"
+      AllowOrigin: "'*'"
+      AllowHeaders: "'Content-type, x-api-key'"
+
+Resources:  
+  TarefasFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: bia/
+      Handler: lambda.handler
+      Runtime: nodejs22.x
+      Architectures:
+        - x86_64
+      Events:
+        Ping:
+          Type: Api 
+          Properties:
+            Path: /ping
+            Method: get
+        ApiPing:
+          Type: Api 
+          Properties:
+            Path: /api/ping
+            Method: get  
+        GetTarefas:
+          Type: Api 
+          Properties:
+            Path: /api/tarefas
+            Method: get
+        PostTarefa:
+          Type: Api 
+          Properties:
+            Path: /api/tarefas
+            Method: post
+        GetTarefa:
+          Type: Api 
+          Properties:
+            Path: /api/tarefas/{uuid}
+            Method: get
+        UpdatePriority:
+          Type: Api 
+          Properties:
+            Path: /api/tarefas/update_priority/{uuid}
+            Method: put
+        DeleteTarefa:
+          Type: Api 
+          Properties:
+            Path: /api/tarefas/{uuid}
+            Method: delete
+      Policies:
+        - SecretsManagerReadWrite
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole
+      Environment:
+        Variables:
+          DB_SECRET_ARN: "arn:aws:secretsmanager:us-east-1:322095785990:secret:rds!db-1e25d59b-dcb7-4351-8173-0155090588c6-GA7EO3"
+          DB_HOST: "db-bia.cfaxmljll1xz.us-east-1.rds.amazonaws.com"
+          DB_PORT: "5432"
+          DB_USER: "postgres"
+          DB_PWD: "urH8i<.<fopvI#VCmpAqwMGQq1k#"
+      VpcConfig:
+        SecurityGroupIds:
+          - "sg-012bcb6b153680495"
+        SubnetIds:
+          - "subnet-0339dd8358d0d396c"
+          - "subnet-0f4978239390808f8"
+Outputs:
+  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
+  # Find out more about other implicit resources you can reference within SAM
+  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
+  TarefasApi:
+    Description: "API Gateway endpoint URL for Prod stage for Tarefas function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/api/tarefas"
+  TarefasFunction:
+    Description: "Tarefas Lambda Function ARN"
+    Value: !GetAtt TarefasFunction.Arn
+  TarefasFunctionIamRole:
+    Description: "Implicit IAM Role created for Hello World function"
+    Value: !GetAtt TarefasFunctionRole.Arn
