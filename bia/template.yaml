@@ -1,14 +1,42 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: >
-  sam-bia
+  bia-serverless
 
-  Sample SAM Template for sam-bia
-  
-# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+  Sample SAM Template for bia-serverless
+Parameters:
+  SecurityGroup:
+    Type: String
+    Description: ID do security group
+  DBName:
+    Type: String
+    Description: Nome da base de dados
+  DBUser:
+    Type: String
+    Description: Nome do usuario da base de dados
+  DB_SECRET_ARN:
+    Type: String
+    Description: Senha do usuario da base de dados
+    NoEcho: true
+  DBHost:
+    Type: String
+    Description: Host da base de dados
+
 Globals:
   Function:
-    Timeout: 60
+    Timeout: 3
+    MemorySize: 512
+    VpcConfig:
+      SecurityGroupIds:
+      - !Ref SecurityGroup
+      SubnetIds:
+        - "subnet-0339dd8358d0d396c"
+        - "subnet-0f4978239390808f8"
+    Environment:
+      Variables:
+        DB_SECRET_ARN: !Ref DB_SECRET_ARN
+        DB_HOST: !Ref DBHost
+        DB_PORT: !Ref DBPort
   Api:
     Cors:
       AllowMethods: "'GET, PUT, POST, DELETE, OPTIONS'"
@@ -58,17 +86,7 @@ Resources:
       Policies:
         - SecretsManagerReadWrite
         - arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole
-      Environment:
-        Variables:
-          DB_SECRET_ARN: "arn:aws:secretsmanager:us-east-1:322095785990:secret:rds!db-893b056f-e42b-4eef-9489-da359326e431"
-          DB_HOST: "db-bia.cfaxmljll1xz.us-east-1.rds.amazonaws.com"
-          DB_PORT: "5432"
-      VpcConfig:
-        SecurityGroupIds:
-          - "sg-012bcb6b153680495"
-        SubnetIds:
-          - "subnet-0339dd8358d0d396c"
-          - "subnet-0f4978239390808f8"
+
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
   # Find out more about other implicit resources you can reference within SAM
