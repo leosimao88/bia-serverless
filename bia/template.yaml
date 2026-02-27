@@ -58,6 +58,11 @@ Resources:
           Type: Api 
           Properties:
             Path: /api/ping
+            Method: get
+        ApiVersao:
+          Type: Api 
+          Properties:
+            Path: /api/versao
             Method: get  
         GetTarefas:
           Type: Api 
