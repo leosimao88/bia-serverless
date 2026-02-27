@@ -25,11 +25,6 @@ Resources:
       Architectures:
         - x86_64
       Events:
-        Ping:
-          Type: Api 
-          Properties:
-            Path: /ping
-            Method: get
         ApiPing:
           Type: Api 
           Properties:
@@ -65,11 +60,9 @@ Resources:
         - arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole
       Environment:
         Variables:
-          DB_SECRET_ARN: "arn:aws:secretsmanager:us-east-1:322095785990:secret:rds!db-1e25d59b-dcb7-4351-8173-0155090588c6-GA7EO3"
+          DB_SECRET_ARN: "arn:aws:secretsmanager:us-east-1:322095785990:secret:rds!db-893b056f-e42b-4eef-9489-da359326e431"
           DB_HOST: "db-bia.cfaxmljll1xz.us-east-1.rds.amazonaws.com"
           DB_PORT: "5432"
-          DB_USER: "postgres"
-          DB_PWD: "urH8i<.<fopvI#VCmpAqwMGQq1k#"
       VpcConfig:
         SecurityGroupIds:
           - "sg-012bcb6b153680495"

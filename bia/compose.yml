@@ -41,5 +41,7 @@ services:
       - db:/var/lib/postgresql/data
 networks:
   serveless:
+    name: bia_serveless
+    external: true
 volumes:
   db:

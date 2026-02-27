@@ -19,8 +19,7 @@ module.exports = () => {
 
   app.use(cors());
 
-  app.get('/ping', (req, res) => res.json({ status: 'ok' }));
-
+  require("../api/routes/ping")(app);
   require("../api/routes/tarefas")(app);
   require("../api/routes/versao")(app);
 
